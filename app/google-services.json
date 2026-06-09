@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "469595226485",
+    "firebase_url": "https://payment-86d79-default-rtdb.firebaseio.com",
+    "project_id": "payment-86d79",
+    "storage_bucket": "payment-86d79.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:469595226485:android:e0d713bbf16df11caa533c",
+        "android_client_info": {
+          "package_name": "com.sumit.paymentalert.data"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "469595226485-qqh3c8e78md7fh970u5lsudjq69a99vp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAipa_pOTnAfF3QJp2eO4P1xVu14YwELc0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "469595226485-qqh3c8e78md7fh970u5lsudjq69a99vp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

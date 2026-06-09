@@ -1,0 +1,6 @@
+{
+  "name": "Payment Alert",
+  "description": "Professional payment alert dashboard with instant voice alerts and custom QR code posters.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
