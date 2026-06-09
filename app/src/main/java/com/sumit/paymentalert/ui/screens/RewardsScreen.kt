@@ -28,9 +28,10 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 @Composable
-fun RewardsScreen(viewModel: PaymentViewModel, modifier: Modifier = Modifier) {
+fun RewardsScreen(viewModel: PaymentViewModel, authViewModel: com.sumit.paymentalert.ui.viewmodel.AuthViewModel, modifier: Modifier = Modifier) {
     val totalCoins by viewModel.totalCoins.collectAsState()
     val rewards by viewModel.rewardsFlow.collectAsState()
+    val userMobile by authViewModel.currentUserMobile.collectAsState()
     val context = LocalContext.current
 
     Column(
@@ -59,7 +60,7 @@ fun RewardsScreen(viewModel: PaymentViewModel, modifier: Modifier = Modifier) {
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 24.dp),
+                .padding(bottom = 16.dp),
             shape = RoundedCornerShape(24.dp),
             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
             elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
@@ -98,6 +99,41 @@ fun RewardsScreen(viewModel: PaymentViewModel, modifier: Modifier = Modifier) {
                 )
             }
         }
+        
+        // Referral Code Display
+        if (userMobile.isNotEmpty()) {
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 24.dp),
+                shape = RoundedCornerShape(16.dp),
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondaryContainer),
+                elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Column {
+                        Text(
+                            text = "Your Referral Code",
+                            style = MaterialTheme.typography.labelLarge,
+                            color = MaterialTheme.colorScheme.onSecondaryContainer.copy(alpha = 0.8f)
+                        )
+                        Text(
+                            text = userMobile,
+                            style = MaterialTheme.typography.titleLarge,
+                            fontWeight = FontWeight.ExtraBold,
+                            letterSpacing = 1.sp,
+                            color = MaterialTheme.colorScheme.onSecondaryContainer
+                        )
+                    }
+                }
+            }
+        }
 
         // Action Buttons
         Row(
@@ -106,11 +142,12 @@ fun RewardsScreen(viewModel: PaymentViewModel, modifier: Modifier = Modifier) {
         ) {
             Button(
                 onClick = {
+                    val actualCode = if(userMobile.isNotEmpty()) userMobile else "YOUR_CODE"
                     viewModel.claimReferralReward() // Give them coins for sharing
                     val shareIntent = Intent().apply {
                         action = Intent.ACTION_SEND
                         type = "text/plain"
-                        putExtra(Intent.EXTRA_TEXT, "Download this amazing Payment Alert app! Earn coins by referring! https://play.google.com/store/apps/details?id=com.sumit.paymentalert")
+                        putExtra(Intent.EXTRA_TEXT, "Download this amazing Payment Alert app! Use my Referral Code: $actualCode to sign up and we both earn coins! https://play.google.com/store/apps/details?id=com.sumit.paymentalert")
                     }
                     context.startActivity(Intent.createChooser(shareIntent, "Share App via"))
                 },

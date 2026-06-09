@@ -150,7 +150,7 @@ fun MainAppLayout() {
                         when (currentScreen) {
                             "dashboard" -> MainDashboardScreen(viewModel = viewModel, modifier = modifier)
                             "qr" -> QrScreen(viewModel = viewModel, modifier = modifier)
-                            "rewards" -> RewardsScreen(viewModel = viewModel, modifier = modifier)
+                            "rewards" -> RewardsScreen(viewModel = viewModel, authViewModel = authViewModel, modifier = modifier)
                             "settings" -> SettingsScreen(viewModel = viewModel, authViewModel = authViewModel, modifier = modifier)
                         }
                     }
