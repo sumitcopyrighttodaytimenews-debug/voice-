@@ -10,6 +10,9 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.sumit.paymentalert.data.PaymentDatabase
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
+import com.sumit.paymentalert.data.RewardTransaction
 import com.sumit.paymentalert.data.PaymentTransaction
 import com.sumit.paymentalert.data.PreferencesHelper
 import com.sumit.paymentalert.service.TTSManager
@@ -26,11 +29,30 @@ class PaymentViewModel(application: Application) : AndroidViewModel(application)
 
     private val db = PaymentDatabase.getDatabase(application)
     private val dao = db.paymentDao()
+    private val rewardDao = db.rewardDao()
     private val prefs = PreferencesHelper(application)
     private val ttsManager = TTSManager(application)
 
     val originalTransactions: StateFlow<List<PaymentTransaction>> = dao.getAllTransactionsFlow()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
+    val totalCoins: StateFlow<Int> = rewardDao.getTotalCoinsFlow()
+        .map { it ?: 0 }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0)
+    
+    val rewardsFlow = rewardDao.getAllRewardsFlow()
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
+    fun claimReferralReward() {
+        viewModelScope.launch {
+            rewardDao.insertReward(
+                RewardTransaction(
+                    title = "Referral Bonus",
+                    coinAmount = 50
+                )
+            )
+        }
+    }
 
     private val _searchQuery = MutableStateFlow("")
     val searchQuery = _searchQuery.asStateFlow()

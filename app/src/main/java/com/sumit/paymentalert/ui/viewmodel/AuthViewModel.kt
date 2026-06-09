@@ -60,7 +60,7 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun signUp(mobile: String, name: String, upiId: String, pass: String) {
+    fun signUp(mobile: String, name: String, upiId: String, pass: String, referralCode: String = "") {
         _authState.value = AuthState.Loading
         viewModelScope.launch {
             try {
@@ -75,7 +75,7 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
                     prefs.upiId = upiId
                     
                     // Save User profile in Realtime Database under "users/$mobile" node
-                    saveProfileToFirebase(mobile, name, upiId)
+                    saveProfileToFirebase(mobile, name, upiId, referralCode)
                     
                     _isUserLoggedIn.value = true
                     _currentUserMobile.value = mobile
@@ -149,15 +149,18 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
         _authState.value = AuthState.Idle
     }
 
-    private fun saveProfileToFirebase(mobile: String, name: String, upiId: String) {
+    private fun saveProfileToFirebase(mobile: String, name: String, upiId: String, referralCode: String = "") {
         try {
             val database = FirebaseDatabase.getInstance()
             val ref = database.getReference("users").child(mobile)
-            val profile = mapOf(
+            val profile = mutableMapOf<String, Any>(
                 "name" to name,
                 "upiId" to upiId,
                 "updatedAt" to System.currentTimeMillis()
             )
+            if (referralCode.isNotEmpty()) {
+                profile["referralCodeUsed"] = referralCode
+            }
             ref.setValue(profile)
         } catch (e: Exception) {
             Log.e("AuthViewModel", "Failed to save profile to RTDB", e)

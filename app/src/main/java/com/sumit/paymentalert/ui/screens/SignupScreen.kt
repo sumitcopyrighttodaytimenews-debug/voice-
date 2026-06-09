@@ -44,6 +44,7 @@ fun SignupScreen(
     var upiId by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
+    var referralCode by remember { mutableStateOf("") }
     
     var passwordVisible by remember { mutableStateOf(false) }
     var confirmPasswordVisible by remember { mutableStateOf(false) }
@@ -267,6 +268,21 @@ fun SignupScreen(
                         .testTag("signup_input_confirm_password"),
                     singleLine = true
                 )
+
+                // Referral Code (Optional)
+                OutlinedTextField(
+                    value = referralCode,
+                    onValueChange = {
+                        referralCode = it
+                    },
+                    label = { Text("Referral Code (Optional)") },
+                    leadingIcon = { Icon(Icons.Default.Star, contentDescription = null) },
+                    shape = RoundedCornerShape(14.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .testTag("signup_input_referral_code"),
+                    singleLine = true
+                )
             }
         }
 
@@ -300,7 +316,8 @@ fun SignupScreen(
                             mobile = mobile,
                             name = merchantName.trim(),
                             upiId = upiId.trim(),
-                            pass = password
+                            pass = password,
+                            referralCode = referralCode.trim()
                         )
                     }
                 }

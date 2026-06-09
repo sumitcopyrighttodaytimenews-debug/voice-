@@ -46,6 +46,7 @@ import com.sumit.paymentalert.ui.screens.QrScreen
 import com.sumit.paymentalert.ui.screens.SettingsScreen
 import com.sumit.paymentalert.ui.screens.LoginScreen
 import com.sumit.paymentalert.ui.screens.SignupScreen
+import com.sumit.paymentalert.ui.screens.RewardsScreen
 import com.sumit.paymentalert.ui.theme.PaymentAlertTheme
 import com.sumit.paymentalert.ui.viewmodel.PaymentViewModel
 import com.sumit.paymentalert.ui.viewmodel.AuthViewModel
@@ -149,6 +150,7 @@ fun MainAppLayout() {
                         when (currentScreen) {
                             "dashboard" -> MainDashboardScreen(viewModel = viewModel, modifier = modifier)
                             "qr" -> QrScreen(viewModel = viewModel, modifier = modifier)
+                            "rewards" -> RewardsScreen(viewModel = viewModel, modifier = modifier)
                             "settings" -> SettingsScreen(viewModel = viewModel, authViewModel = authViewModel, modifier = modifier)
                         }
                     }
@@ -475,7 +477,17 @@ fun BottomNavigationBar(
                     modifier = Modifier.testTag("nav_tab_qr")
                 )
 
-                // 3. Settings Tab
+                // 3. Rewards Tab
+                BottomNavItem(
+                    isSelected = currentSelection == "rewards",
+                    label = "Rewards",
+                    icon = Icons.Default.Star,
+                    activeIcon = Icons.Default.Star,
+                    onClick = { onSelected("rewards") },
+                    modifier = Modifier.testTag("nav_tab_rewards")
+                )
+
+                // 4. Settings Tab
                 BottomNavItem(
                     isSelected = currentSelection == "settings",
                     label = "Settings",
