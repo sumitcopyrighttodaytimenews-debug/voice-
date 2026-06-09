@@ -8,6 +8,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ExitToApp
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -58,11 +59,24 @@ fun SettingsScreen(
     ) {
         // Title Header
         Text(
-            text = "Settings & Voice setup",
-            style = MaterialTheme.typography.titleLarge,
-            fontWeight = FontWeight.Bold,
+            text = "Settings",
+            style = MaterialTheme.typography.headlineMedium,
+            fontWeight = FontWeight.ExtraBold,
             color = MaterialTheme.colorScheme.onBackground,
-            modifier = Modifier.padding(bottom = 8.dp)
+            letterSpacing = (-0.5).sp,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 0.dp, top = 4.dp),
+            textAlign = TextAlign.Start
+        )
+        Text(
+            text = "Voice setup and configurations.",
+            fontSize = 14.sp,
+            color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp),
+            textAlign = TextAlign.Start
         )
 
         // 1. Business Profile Card
@@ -320,7 +334,7 @@ fun SettingsScreen(
                     .padding(top = 4.dp, bottom = 24.dp)
                     .testTag("logout_app_button")
             ) {
-                Icon(Icons.Default.ExitToApp, contentDescription = null)
+                Icon(Icons.AutoMirrored.Filled.ExitToApp, contentDescription = null)
                 Spacer(modifier = Modifier.width(8.dp))
                 Text("Logout / Sign Out", fontWeight = FontWeight.Bold)
             }

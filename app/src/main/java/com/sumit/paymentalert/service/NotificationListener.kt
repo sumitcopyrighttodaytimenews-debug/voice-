@@ -75,25 +75,25 @@ class NotificationListener : NotificationListenerService() {
         val matcherAmount = patternAmount.matcher(messageBody)
 
         if (matcher1.find()) {
-            sender = matcher1.group(1).trim()
-            val amtStr = matcher1.group(2).replace(",", "")
+            sender = matcher1.group(1)?.trim() ?: sender
+            val amtStr = matcher1.group(2)?.replace(",", "") ?: ""
             amount = amtStr.toDoubleOrNull()
         } else if (matcher2.find()) {
-            val amtStr = matcher2.group(1).replace(",", "")
+            val amtStr = matcher2.group(1)?.replace(",", "") ?: ""
             amount = amtStr.toDoubleOrNull()
-            sender = matcher2.group(2).trim()
+            sender = matcher2.group(2)?.trim() ?: sender
         } else if (matcher3.find()) {
-            val amtStr = matcher3.group(1).replace(",", "")
+            val amtStr = matcher3.group(1)?.replace(",", "") ?: ""
             amount = amtStr.toDoubleOrNull()
-            sender = matcher3.group(2).trim()
+            sender = matcher3.group(2)?.trim() ?: sender
         } else if (matcherAmount.find()) {
-            val amtStr = matcherAmount.group(1).replace(",", "")
+            val amtStr = matcherAmount.group(1)?.replace(",", "") ?: ""
             amount = amtStr.toDoubleOrNull()
             
             val senderPattern = Pattern.compile("(?:from|by|by account of|sender)\\s+([a-zA-Z0-9\\s]+)", Pattern.CASE_INSENSITIVE)
             val senderMatcher = senderPattern.matcher(messageBody)
             if (senderMatcher.find()) {
-                sender = senderMatcher.group(1).trim()
+                sender = senderMatcher.group(1)?.trim() ?: sender
             }
         }
 

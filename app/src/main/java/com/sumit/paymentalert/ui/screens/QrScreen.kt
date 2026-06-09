@@ -85,11 +85,25 @@ fun QrScreen(
         ) {
             // Header Screen
             Text(
-                text = "My Business QR Code",
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Bold,
+                text = "My Business QR",
+                style = MaterialTheme.typography.headlineMedium,
+                fontWeight = FontWeight.ExtraBold,
                 color = MaterialTheme.colorScheme.onBackground,
-                modifier = Modifier.padding(bottom = 24.dp)
+                letterSpacing = (-0.5).sp,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 8.dp, top = 4.dp),
+                textAlign = TextAlign.Start
+            )
+            
+            Text(
+                text = "Scan to receive instantaneous payments.",
+                fontSize = 14.sp,
+                color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 24.dp),
+                textAlign = TextAlign.Start
             )
 
             if (isEditingUpId) {

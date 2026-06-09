@@ -19,7 +19,7 @@ abstract class PaymentDatabase : RoomDatabase() {
                     context.applicationContext,
                     PaymentDatabase::class.java,
                     "payment_alert_db"
-                ).fallbackToDestructiveMigration().build()
+                ).fallbackToDestructiveMigration(true).build()
                 INSTANCE = instance
                 instance
             }

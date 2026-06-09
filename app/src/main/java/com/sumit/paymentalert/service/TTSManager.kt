@@ -35,9 +35,9 @@ class TTSManager(private val context: Context) : TextToSpeech.OnInitListener {
     fun configureLanguage() {
         val lang = prefs.ttsLanguage
         val locale = when (lang) {
-            "Hindi" -> Locale("hi", "IN")
+            "Hindi" -> Locale.Builder().setLanguage("hi").setRegion("IN").build()
             "English" -> Locale.US
-            else -> Locale("hi", "IN") // Default to Hindi structure
+            else -> Locale.Builder().setLanguage("hi").setRegion("IN").build() // Default to Hindi structure
         }
         try {
             tts?.language = locale
